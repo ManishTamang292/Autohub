@@ -7,6 +7,4 @@ if ($mysqli->connect_errno) {
     exit();
 }
 
-echo "Database connection successful";
-
 ?>
