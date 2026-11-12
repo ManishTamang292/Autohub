@@ -27,6 +27,7 @@ $results = mysqli_query($mysqli, $sql);
         <th>Year</th>
         <th>Price</th>
         <th>Mileage</th>
+        <th>Details</th>
     </tr>
 
     <?php while($car = mysqli_fetch_assoc($results)): ?>
@@ -37,7 +38,12 @@ $results = mysqli_query($mysqli, $sql);
             <td><?=$car['year']?></td>
             <td>£<?=$car['price']?></td>
             <td><?=$car['mileage']?> miles</td>
+            <td>
+                <a href="car-details.php?id=<?=$car['car_id']?>">View Details</a>
+            </td>
         </tr>
+
+        
 
     <?php endwhile; ?>
 
