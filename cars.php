@@ -50,6 +50,7 @@ $results = mysqli_query($mysqli, $sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoHub - Cars</title>
+
 </head>
 
 <body>
@@ -107,6 +108,12 @@ $results = mysqli_query($mysqli, $sql);
 
 </form>
 
+<h3>Quick Search</h3>
+
+<input type="text" id="ajaxSearch" placeholder="Search by make or model">
+
+<div id="ajaxResults"></div>
+
 <table border="1">
     <tr>
         <th>Make</th>
@@ -135,6 +142,8 @@ $results = mysqli_query($mysqli, $sql);
     <?php endwhile; ?>
 
 </table>
+
+<script src="js/autohub.js"></script>
 
 </body>
 </html>
