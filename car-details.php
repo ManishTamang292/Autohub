@@ -37,6 +37,9 @@ $car = mysqli_fetch_assoc($results);
 <h3>Description</h3>
 <p><?=$car['description']?></p>
 
+<a href="edit-car.php?id=<?=$car['car_id']?>">Edit Car</a>
+<br><br>
+
 <a href="cars.php">Back to cars</a>
 
 </body>
