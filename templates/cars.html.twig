@@ -1,0 +1,98 @@
+{% extends "base.html.twig" %}
+
+{% block title %}AutoHub - Cars{% endblock %}
+
+{% block content %}
+
+<h2>Available Cars</h2>
+
+<h3>Search Cars</h3>
+
+<form method="GET">
+
+    <label>Make:</label>
+    <input type="text" name="make" value="{{ make }}">
+
+    <label>Model:</label>
+    <input type="text" name="model" value="{{ model }}">
+
+    <label>Minimum Price:</label>
+    <input type="number" name="min_price" value="{{ min_price }}">
+
+    <label>Maximum Price:</label>
+    <input type="number" name="max_price" value="{{ max_price }}">
+
+    <label>Year:</label>
+    <input type="number" name="year" value="{{ year }}">
+
+    <label>Fuel Type:</label>
+    <select name="fuel_type">
+        <option value="">Any</option>
+        <option value="Petrol" {% if fuel_type == 'Petrol' %}selected{% endif %}>Petrol</option>
+        <option value="Diesel" {% if fuel_type == 'Diesel' %}selected{% endif %}>Diesel</option>
+        <option value="Hybrid" {% if fuel_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+        <option value="Electric" {% if fuel_type == 'Electric' %}selected{% endif %}>Electric</option>
+    </select>
+
+    <label>Transmission:</label>
+    <select name="transmission">
+        <option value="">Any</option>
+        <option value="Manual" {% if transmission == 'Manual' %}selected{% endif %}>Manual</option>
+        <option value="Automatic" {% if transmission == 'Automatic' %}selected{% endif %}>Automatic</option>
+    </select>
+
+    <label>Body Type:</label>
+    <select name="body_type">
+        <option value="">Any</option>
+        <option value="Hatchback" {% if body_type == 'Hatchback' %}selected{% endif %}>Hatchback</option>
+        <option value="Saloon" {% if body_type == 'Saloon' %}selected{% endif %}>Saloon</option>
+        <option value="SUV" {% if body_type == 'SUV' %}selected{% endif %}>SUV</option>
+        <option value="Estate" {% if body_type == 'Estate' %}selected{% endif %}>Estate</option>
+        <option value="Coupe" {% if body_type == 'Coupe' %}selected{% endif %}>Coupe</option>
+        <option value="Convertible" {% if body_type == 'Convertible' %}selected{% endif %}>Convertible</option>
+    </select>
+
+    <button type="submit">Search</button>
+    <a href="cars.php">Clear Search</a>
+
+</form>
+
+<h3>Quick Search</h3>
+
+<input type="text" id="ajaxSearch" placeholder="Search by make or model">
+
+<div id="ajaxResults"></div>
+
+<table border="1">
+
+    <tr>
+        <th>Make</th>
+        <th>Model</th>
+        <th>Year</th>
+        <th>Price</th>
+        <th>Mileage</th>
+        <th>Details</th>
+    </tr>
+
+    {% for car in cars %}
+
+        <tr>
+            <td>{{ car.make }}</td>
+            <td>{{ car.model }}</td>
+            <td>{{ car.year }}</td>
+            <td>£{{ car.price }}</td>
+            <td>{{ car.mileage }} miles</td>
+            <td>
+                <a href="car-details.php?id={{ car.car_id }}">
+                    View Details
+                </a>
+            </td>
+        </tr>
+
+    {% endfor %}
+
+</table>
+
+<script src="js/autohub.js"></script>
+
+{% endblock %}

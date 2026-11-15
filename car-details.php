@@ -1,5 +1,10 @@
 <?php
 
+require_once 'vendor/autoload.php';
+
+$loader = new \Twig\Loader\FilesystemLoader('templates');
+$twig = new \Twig\Environment($loader);
+
 include("db.php");
 
 $car_id = $_GET['id'];
@@ -9,41 +14,8 @@ $results = mysqli_query($mysqli, $sql);
 
 $car = mysqli_fetch_assoc($results);
 
-?>
+echo $twig->render('car-details.html.twig', [
+    'car' => $car
+]);
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoHub - Car Details</title>
-</head>
-
-<body>
-
-<h1>AutoHub</h1>
-
-<h2><?=$car['make']?> <?=$car['model']?></h2>
-
-<p><strong>Year:</strong> <?=$car['year']?></p>
-<p><strong>Price:</strong> £<?=$car['price']?></p>
-<p><strong>Mileage:</strong> <?=$car['mileage']?> miles</p>
-<p><strong>Fuel:</strong> <?=$car['fuel_type']?></p>
-<p><strong>Transmission:</strong> <?=$car['transmission']?></p>
-<p><strong>Body type:</strong> <?=$car['body_type']?></p>
-<p><strong>Colour:</strong> <?=$car['colour']?></p>
-<p><strong>Location:</strong> <?=$car['location']?></p>
-
-<h3>Description</h3>
-<p><?=$car['description']?></p>
-
-<a href="edit-car.php?id=<?=$car['car_id']?>">Edit Car</a>
-<br><br>
-
-<a href="delete-car.php?id=<?=$car['car_id']?>">Delete Car</a>
-<br><br>
-
-<a href="cars.php">Back to cars</a>
-
-</body>
-</html>
+exit();
