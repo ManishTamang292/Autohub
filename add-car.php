@@ -1,5 +1,8 @@
 <?php
 
+require_once 'auth.php';
+requireLogin();
+
 require_once 'vendor/autoload.php';
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
@@ -7,31 +10,119 @@ $twig = new \Twig\Environment($loader);
 
 include("db.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$errors = [];
 
-    $make = $_POST['make'];
-    $model = $_POST['model'];
-    $year = $_POST['year'];
-    $price = $_POST['price'];
-    $mileage = $_POST['mileage'];
-    $fuel_type = $_POST['fuel_type'];
-    $transmission = $_POST['transmission'];
-    $body_type = $_POST['body_type'];
-    $colour = $_POST['colour'];
-    $location = $_POST['location'];
-    $description = $_POST['description'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $sql = "INSERT INTO cars 
+    $make = trim($_POST['make'] ?? '');
+    $model = trim($_POST['model'] ?? '');
+    $year = filter_input(INPUT_POST, 'year', FILTER_VALIDATE_INT);
+    $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
+    $mileage = filter_input(INPUT_POST, 'mileage', FILTER_VALIDATE_INT);
+    $fuel_type = $_POST['fuel_type'] ?? '';
+    $transmission = $_POST['transmission'] ?? '';
+    $body_type = $_POST['body_type'] ?? '';
+    $colour = trim($_POST['colour'] ?? '');
+    $location = trim($_POST['location'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+
+    $allowed_fuel_types = [
+        'Petrol',
+        'Diesel',
+        'Hybrid',
+        'Electric'
+    ];
+
+    $allowed_transmissions = [
+        'Manual',
+        'Automatic'
+    ];
+
+    $allowed_body_types = [
+        'Hatchback',
+        'Saloon',
+        'SUV',
+        'Estate',
+        'Coupe',
+        'Convertible'
+    ];
+
+    if ($make === '') {
+        $errors[] = 'Make is required.';
+    }
+
+    if ($model === '') {
+        $errors[] = 'Model is required.';
+    }
+
+    if ($year === false || $year === null || $year < 1900 || $year > date('Y') + 1) {
+        $errors[] = 'Please enter a valid year.';
+    }
+
+    if ($price === false || $price === null || $price < 0) {
+        $errors[] = 'Please enter a valid price.';
+    }
+
+    if ($mileage === false || $mileage === null || $mileage < 0) {
+        $errors[] = 'Please enter a valid mileage.';
+    }
+
+    if (!in_array($fuel_type, $allowed_fuel_types, true)) {
+        $errors[] = 'Invalid fuel type.';
+    }
+
+    if (!in_array($transmission, $allowed_transmissions, true)) {
+        $errors[] = 'Invalid transmission.';
+    }
+
+    if (!in_array($body_type, $allowed_body_types, true)) {
+        $errors[] = 'Invalid body type.';
+    }
+
+    if ($colour === '') {
+        $errors[] = 'Colour is required.';
+    }
+
+    if ($location === '') {
+        $errors[] = 'Location is required.';
+    }
+
+    if ($description === '') {
+        $errors[] = 'Description is required.';
+    }
+
+    if (empty($errors)) {
+
+        $stmt = $mysqli->prepare(
+            "INSERT INTO cars
             (make, model, year, price, mileage, fuel_type, transmission, body_type, colour, location, description)
-            VALUES 
-            ('$make', '$model', '$year', '$price', '$mileage', '$fuel_type', '$transmission', '$body_type', '$colour', '$location', '$description')";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
 
-    mysqli_query($mysqli, $sql);
+        $stmt->bind_param(
+            "ssidissssss",
+            $make,
+            $model,
+            $year,
+            $price,
+            $mileage,
+            $fuel_type,
+            $transmission,
+            $body_type,
+            $colour,
+            $location,
+            $description
+        );
 
-    header("Location: cars.php");
-    exit();
+        $stmt->execute();
+
+        header("Location: cars.php");
+        exit();
+    }
 }
 
-echo $twig->render('add-car.html.twig');
+echo $twig->render('add-car.html.twig', [
+    'errors' => $errors
+]);
 
 exit();

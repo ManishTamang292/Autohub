@@ -4,29 +4,122 @@
 
 {% block content %}
 
-<h2>{{ car.make }} {{ car.model }}</h2>
+<div class="container py-4">
 
-<p><strong>Year:</strong> {{ car.year }}</p>
-<p><strong>Price:</strong> £{{ car.price }}</p>
-<p><strong>Mileage:</strong> {{ car.mileage }} miles</p>
-<p><strong>Fuel:</strong> {{ car.fuel_type }}</p>
-<p><strong>Transmission:</strong> {{ car.transmission }}</p>
-<p><strong>Body type:</strong> {{ car.body_type }}</p>
-<p><strong>Colour:</strong> {{ car.colour }}</p>
-<p><strong>Location:</strong> {{ car.location }}</p>
+    <div class="card">
 
-<h3>Description</h3>
+        <div class="card-body">
 
-<p>{{ car.description }}</p>
+            <h2 class="card-title mb-4">
+                {{ car.make }} {{ car.model }}
+            </h2>
 
-<a href="edit-car.php?id={{ car.car_id }}">Edit Car</a>
+            <div class="row">
 
-<br><br>
+                <div class="col-md-6">
 
-<a href="delete-car.php?id={{ car.car_id }}">Delete Car</a>
+                    <p>
+                        <strong>Year:</strong>
+                        {{ car.year }}
+                    </p>
 
-<br><br>
+                    <p>
+                        <strong>Price:</strong>
+                        £{{ car.price }}
+                    </p>
 
-<a href="cars.php">Back to cars</a>
+                    <p>
+                        <strong>Mileage:</strong>
+                        {{ car.mileage }} miles
+                    </p>
+
+                    <p>
+                        <strong>Fuel:</strong>
+                        {{ car.fuel_type }}
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <p>
+                        <strong>Transmission:</strong>
+                        {{ car.transmission }}
+                    </p>
+
+                    <p>
+                        <strong>Body type:</strong>
+                        {{ car.body_type }}
+                    </p>
+
+                    <p>
+                        <strong>Colour:</strong>
+                        {{ car.colour }}
+                    </p>
+
+                    <p>
+                        <strong>Location:</strong>
+                        {{ car.location }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h3>Description</h3>
+
+            <p>{{ car.description }}</p>
+
+            <hr>
+
+            <div class="mt-3">
+
+            <a
+                href="edit-car.php?id={{ car.car_id }}"
+                class="btn btn-warning"
+            >
+                Edit Car
+            </a>
+
+            <form method="POST" action="delete-car.php" class="d-inline">
+
+                <input
+                    type="hidden"
+                    name="id"
+                    value="{{ car.car_id }}"
+                >
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token }}"
+                >
+
+                <button
+                    type="submit"
+                    class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want to delete this car?');"
+                >
+                    Delete Car
+                </button>
+
+            </form>
+
+            <a
+                href="cars.php"
+                class="btn btn-secondary"
+            >
+                Back to Cars
+            </a>
+
+        </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

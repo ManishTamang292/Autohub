@@ -4,87 +4,184 @@
 
 {% block content %}
 
-<h2>Edit Car</h2>
+<div class="container py-4">
 
-<form method="POST">
+    <div class="card">
 
-    <label>Make:</label>
-    <input type="text" name="make" value="{{ car.make }}" required>
+        <div class="card-body">
 
-    <br><br>
+           <h2 class="card-title mb-4">Edit Car</h2>
 
-    <label>Model:</label>
-    <input type="text" name="model" value="{{ car.model }}" required>
+            {% if errors %}
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
 
-    <br><br>
+            <form method="POST">
 
-    <label>Year:</label>
-    <input type="number" name="year" value="{{ car.year }}" required>
+                <div class="row g-3">
 
-    <br><br>
+                    <div class="col-md-6">
+                        <label class="form-label">Make:</label>
+                        <input
+                            type="text"
+                            name="make"
+                            value="{{ car.make }}"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <label>Price:</label>
-    <input type="number" step="0.01" name="price" value="{{ car.price }}" required>
+                    <div class="col-md-6">
+                        <label class="form-label">Model:</label>
+                        <input
+                            type="text"
+                            name="model"
+                            value="{{ car.model }}"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <br><br>
+                    <div class="col-md-4">
+                        <label class="form-label">Year:</label>
+                        <input
+                            type="number"
+                            name="year"
+                            value="{{ car.year }}"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <label>Mileage:</label>
-    <input type="number" name="mileage" value="{{ car.mileage }}" required>
+                    <div class="col-md-4">
+                        <label class="form-label">Price:</label>
+                        <input
+                            type="number"
+                            step="0.01"
+                            name="price"
+                            value="{{ car.price }}"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <br><br>
+                    <div class="col-md-4">
+                        <label class="form-label">Mileage:</label>
+                        <input
+                            type="number"
+                            name="mileage"
+                            value="{{ car.mileage }}"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <label>Fuel type:</label>
-    <select name="fuel_type" required>
-        <option value="Petrol" {% if car.fuel_type == 'Petrol' %}selected{% endif %}>Petrol</option>
-        <option value="Diesel" {% if car.fuel_type == 'Diesel' %}selected{% endif %}>Diesel</option>
-        <option value="Hybrid" {% if car.fuel_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
-        <option value="Electric" {% if car.fuel_type == 'Electric' %}selected{% endif %}>Electric</option>
-    </select>
+                    <div class="col-md-4">
+                        <label class="form-label">Fuel Type:</label>
+                        <select
+                            name="fuel_type"
+                            class="form-select"
+                            required
+                        >
+                            <option value="Petrol" {% if car.fuel_type == 'Petrol' %}selected{% endif %}>Petrol</option>
+                            <option value="Diesel" {% if car.fuel_type == 'Diesel' %}selected{% endif %}>Diesel</option>
+                            <option value="Hybrid" {% if car.fuel_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+                            <option value="Electric" {% if car.fuel_type == 'Electric' %}selected{% endif %}>Electric</option>
+                        </select>
+                    </div>
 
-    <br><br>
+                    <div class="col-md-4">
+                        <label class="form-label">Transmission:</label>
+                        <select
+                            name="transmission"
+                            class="form-select"
+                            required
+                        >
+                            <option value="Manual" {% if car.transmission == 'Manual' %}selected{% endif %}>Manual</option>
+                            <option value="Automatic" {% if car.transmission == 'Automatic' %}selected{% endif %}>Automatic</option>
+                        </select>
+                    </div>
 
-    <label>Transmission:</label>
-    <select name="transmission" required>
-        <option value="Manual" {% if car.transmission == 'Manual' %}selected{% endif %}>Manual</option>
-        <option value="Automatic" {% if car.transmission == 'Automatic' %}selected{% endif %}>Automatic</option>
-    </select>
+                    <div class="col-md-4">
+                        <label class="form-label">Body Type:</label>
+                        <select
+                            name="body_type"
+                            class="form-select"
+                            required
+                        >
+                            <option value="Hatchback" {% if car.body_type == 'Hatchback' %}selected{% endif %}>Hatchback</option>
+                            <option value="Saloon" {% if car.body_type == 'Saloon' %}selected{% endif %}>Saloon</option>
+                            <option value="SUV" {% if car.body_type == 'SUV' %}selected{% endif %}>SUV</option>
+                            <option value="Estate" {% if car.body_type == 'Estate' %}selected{% endif %}>Estate</option>
+                            <option value="Coupe" {% if car.body_type == 'Coupe' %}selected{% endif %}>Coupe</option>
+                            <option value="Convertible" {% if car.body_type == 'Convertible' %}selected{% endif %}>Convertible</option>
+                        </select>
+                    </div>
 
-    <br><br>
+                    <div class="col-md-6">
+                        <label class="form-label">Colour:</label>
+                        <input
+                            type="text"
+                            name="colour"
+                            value="{{ car.colour }}"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <label>Body type:</label>
-    <select name="body_type" required>
-        <option value="Hatchback" {% if car.body_type == 'Hatchback' %}selected{% endif %}>Hatchback</option>
-        <option value="Saloon" {% if car.body_type == 'Saloon' %}selected{% endif %}>Saloon</option>
-        <option value="SUV" {% if car.body_type == 'SUV' %}selected{% endif %}>SUV</option>
-        <option value="Estate" {% if car.body_type == 'Estate' %}selected{% endif %}>Estate</option>
-        <option value="Coupe" {% if car.body_type == 'Coupe' %}selected{% endif %}>Coupe</option>
-        <option value="Convertible" {% if car.body_type == 'Convertible' %}selected{% endif %}>Convertible</option>
-    </select>
+                    <div class="col-md-6">
+                        <label class="form-label">Location:</label>
+                        <input
+                            type="text"
+                            name="location"
+                            value="{{ car.location }}"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <br><br>
+                    <div class="col-12">
+                        <label class="form-label">Description:</label>
+                        <textarea
+                            name="description"
+                            class="form-control"
+                            rows="5"
+                            required
+                        >{{ car.description }}</textarea>
+                    </div>
 
-    <label>Colour:</label>
-    <input type="text" name="colour" value="{{ car.colour }}" required>
+                </div>
 
-    <br><br>
+                <div class="mt-4">
 
-    <label>Location:</label>
-    <input type="text" name="location" value="{{ car.location }}" required>
+                    <button
+                        type="submit"
+                        class="btn btn-warning"
+                    >
+                        Update Car
+                    </button>
 
-    <br><br>
+                    <a
+                        href="car-details.php?id={{ car.car_id }}"
+                        class="btn btn-secondary"
+                    >
+                        Cancel
+                    </a>
 
-    <label>Description:</label>
-    <br>
-    <textarea name="description" rows="5" cols="40" required>{{ car.description }}</textarea>
+                </div>
 
-    <br><br>
+            </form>
 
-    <button type="submit">Update Car</button>
+        </div>
 
-</form>
+    </div>
 
-<br>
-
-<a href="car-details.php?id={{ car.car_id }}">Cancel</a>
+</div>
 
 {% endblock %}

@@ -1,13 +1,144 @@
 {% extends "base.html.twig" %}
 
-{% block title %}AutoHub - Home{% endblock %}
+{% block title %}AutoHub - Find Your Next Car{% endblock %}
 
 {% block content %}
 
-<h2>Welcome to AutoHub</h2>
+<section class="hero-section">
 
-<p>Find your next car with AutoHub.</p>
+    <div class="container">
 
-<a href="cars.php">Browse Cars</a>
+        <div class="hero-content">
+
+            <span class="hero-label">AUTOHUB MARKETPLACE</span>
+
+            <h1>Find Your Next Car</h1>
+
+            <p>
+                Discover quality cars, compare your options,
+                and find the right vehicle for you.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="cars.php" class="btn btn-primary btn-lg">
+                    Browse Cars
+                </a>
+
+                <a href="add-car.php" class="btn btn-outline-light btn-lg">
+                    Sell Your Car
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <span class="section-label">WHY AUTOHUB?</span>
+
+        <h2>Everything You Need</h2>
+
+        <p class="text-muted">
+            A simple way to find, manage and sell vehicles.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🔎
+                </div>
+
+                <h3>Easy Search</h3>
+
+                <p>
+                    Search cars using multiple criteria including
+                    price, year, fuel type and transmission.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🚗
+                </div>
+
+                <h3>Browse Cars</h3>
+
+                <p>
+                    Explore available vehicles and view detailed
+                    information about each listing.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🏷️
+                </div>
+
+                <h3>Sell Your Car</h3>
+
+                <p>
+                    Create your own vehicle listing and manage
+                    your car information easily.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="cta-section">
+
+    <div class="container">
+
+        <div class="cta-content">
+
+            <h2>Ready to find your next car?</h2>
+
+            <p>
+                Browse our available vehicles and start your search today.
+            </p>
+
+            <a href="cars.php" class="btn btn-light btn-lg">
+                Explore Cars
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
 
 {% endblock %}

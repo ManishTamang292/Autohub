@@ -4,84 +4,177 @@
 
 {% block content %}
 
-<h2>Add a Car</h2>
+<div class="container py-4">
 
-<form method="POST">
+    <div class="card">
 
-    <label>Make:</label>
-    <input type="text" name="make" required>
+        <div class="card-body">
 
-    <br><br>
+            <h2 class="card-title mb-4">Add a Car</h2>
 
-    <label>Model:</label>
-    <input type="text" name="model" required>
+            {% if errors %}
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
 
-    <br><br>
+            <form method="POST">
 
-    <label>Year:</label>
-    <input type="number" name="year" required>
+                <div class="row g-3">
 
-    <br><br>
+                    <div class="col-md-6">
+                        <label class="form-label">Make:</label>
+                        <input
+                            type="text"
+                            name="make"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <label>Price:</label>
-    <input type="number" step="0.01" name="price" required>
+                    <div class="col-md-6">
+                        <label class="form-label">Model:</label>
+                        <input
+                            type="text"
+                            name="model"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <br><br>
+                    <div class="col-md-4">
+                        <label class="form-label">Year:</label>
+                        <input
+                            type="number"
+                            name="year"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <label>Mileage:</label>
-    <input type="number" name="mileage" required>
+                    <div class="col-md-4">
+                        <label class="form-label">Price:</label>
+                        <input
+                            type="number"
+                            step="0.01"
+                            name="price"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <br><br>
+                    <div class="col-md-4">
+                        <label class="form-label">Mileage:</label>
+                        <input
+                            type="number"
+                            name="mileage"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <label>Fuel Type:</label>
-    <select name="fuel_type" required>
-        <option value="Petrol">Petrol</option>
-        <option value="Diesel">Diesel</option>
-        <option value="Hybrid">Hybrid</option>
-        <option value="Electric">Electric</option>
-    </select>
+                    <div class="col-md-4">
+                        <label class="form-label">Fuel Type:</label>
+                        <select
+                            name="fuel_type"
+                            class="form-select"
+                            required
+                        >
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Electric">Electric</option>
+                        </select>
+                    </div>
 
-    <br><br>
+                    <div class="col-md-4">
+                        <label class="form-label">Transmission:</label>
+                        <select
+                            name="transmission"
+                            class="form-select"
+                            required
+                        >
+                            <option value="Manual">Manual</option>
+                            <option value="Automatic">Automatic</option>
+                        </select>
+                    </div>
 
-    <label>Transmission:</label>
-    <select name="transmission" required>
-        <option value="Manual">Manual</option>
-        <option value="Automatic">Automatic</option>
-    </select>
+                    <div class="col-md-4">
+                        <label class="form-label">Body Type:</label>
+                        <select
+                            name="body_type"
+                            class="form-select"
+                            required
+                        >
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Saloon">Saloon</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Estate">Estate</option>
+                            <option value="Coupe">Coupe</option>
+                            <option value="Convertible">Convertible</option>
+                        </select>
+                    </div>
 
-    <br><br>
+                    <div class="col-md-6">
+                        <label class="form-label">Colour:</label>
+                        <input
+                            type="text"
+                            name="colour"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <label>Body Type:</label>
-    <select name="body_type" required>
-        <option value="Hatchback">Hatchback</option>
-        <option value="Saloon">Saloon</option>
-        <option value="SUV">SUV</option>
-        <option value="Estate">Estate</option>
-        <option value="Coupe">Coupe</option>
-        <option value="Convertible">Convertible</option>
-    </select>
+                    <div class="col-md-6">
+                        <label class="form-label">Location:</label>
+                        <input
+                            type="text"
+                            name="location"
+                            class="form-control"
+                            required
+                        >
+                    </div>
 
-    <br><br>
+                    <div class="col-12">
+                        <label class="form-label">Description:</label>
+                        <textarea
+                            name="description"
+                            class="form-control"
+                            rows="5"
+                            required
+                        ></textarea>
+                    </div>
 
-    <label>Colour:</label>
-    <input type="text" name="colour" required>
+                </div>
 
-    <br><br>
+                <div class="mt-4">
 
-    <label>Location:</label>
-    <input type="text" name="location" required>
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                    >
+                        Add Car
+                    </button>
 
-    <br><br>
+                    <a
+                        href="cars.php"
+                        class="btn btn-secondary"
+                    >
+                        Back to Cars
+                    </a>
 
-    <label>Description:</label>
-    <textarea name="description" required></textarea>
+                </div>
 
-    <br><br>
+            </form>
 
-    <button type="submit">Add Car</button>
+        </div>
 
-</form>
+    </div>
 
-<a href="cars.php">Back to cars</a>
+</div>
 
 {% endblock %}

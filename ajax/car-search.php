@@ -4,15 +4,23 @@ include("../db.php");
 
 $search = $_GET['search'] ?? '';
 
-$sql = "SELECT * FROM cars
-        WHERE make LIKE '%$search%'
-        OR model LIKE '%$search%'";
+$searchTerm = "%" . $search . "%";
 
-$results = mysqli_query($mysqli, $sql);
+$stmt = $mysqli->prepare(
+    "SELECT * FROM cars
+     WHERE make LIKE ?
+     OR model LIKE ?"
+);
+
+$stmt->bind_param("ss", $searchTerm, $searchTerm);
+
+$stmt->execute();
+
+$results = $stmt->get_result();
 
 $cars = [];
 
-while ($car = mysqli_fetch_assoc($results)) {
+while ($car = $results->fetch_assoc()) {
     $cars[] = $car;
 }
 

@@ -4,94 +4,180 @@
 
 {% block content %}
 
-<h2>Available Cars</h2>
+<div class="container py-4">
 
-<h3>Search Cars</h3>
+    <h2 class="mb-4">Available Cars</h2>
 
-<form method="GET">
+    <div class="card mb-4">
+        <div class="card-body">
 
-    <label>Make:</label>
-    <input type="text" name="make" value="{{ make }}">
+            <h3 class="card-title mb-3">Search Cars</h3>
 
-    <label>Model:</label>
-    <input type="text" name="model" value="{{ model }}">
+            <form method="GET">
 
-    <label>Minimum Price:</label>
-    <input type="number" name="min_price" value="{{ min_price }}">
+                <div class="row g-3">
 
-    <label>Maximum Price:</label>
-    <input type="number" name="max_price" value="{{ max_price }}">
+                    <div class="col-md-4">
+                        <label class="form-label">Make:</label>
+                        <input type="text" name="make" value="{{ make }}" class="form-control">
+                    </div>
 
-    <label>Year:</label>
-    <input type="number" name="year" value="{{ year }}">
+                    <div class="col-md-4">
+                        <label class="form-label">Model:</label>
+                        <input type="text" name="model" value="{{ model }}" class="form-control">
+                    </div>
 
-    <label>Fuel Type:</label>
-    <select name="fuel_type">
-        <option value="">Any</option>
-        <option value="Petrol" {% if fuel_type == 'Petrol' %}selected{% endif %}>Petrol</option>
-        <option value="Diesel" {% if fuel_type == 'Diesel' %}selected{% endif %}>Diesel</option>
-        <option value="Hybrid" {% if fuel_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
-        <option value="Electric" {% if fuel_type == 'Electric' %}selected{% endif %}>Electric</option>
-    </select>
+                    <div class="col-md-4">
+                        <label class="form-label">Minimum Price:</label>
+                        <input type="number" name="min_price" value="{{ min_price }}" class="form-control">
+                    </div>
 
-    <label>Transmission:</label>
-    <select name="transmission">
-        <option value="">Any</option>
-        <option value="Manual" {% if transmission == 'Manual' %}selected{% endif %}>Manual</option>
-        <option value="Automatic" {% if transmission == 'Automatic' %}selected{% endif %}>Automatic</option>
-    </select>
+                    <div class="col-md-4">
+                        <label class="form-label">Maximum Price:</label>
+                        <input type="number" name="max_price" value="{{ max_price }}" class="form-control">
+                    </div>
 
-    <label>Body Type:</label>
-    <select name="body_type">
-        <option value="">Any</option>
-        <option value="Hatchback" {% if body_type == 'Hatchback' %}selected{% endif %}>Hatchback</option>
-        <option value="Saloon" {% if body_type == 'Saloon' %}selected{% endif %}>Saloon</option>
-        <option value="SUV" {% if body_type == 'SUV' %}selected{% endif %}>SUV</option>
-        <option value="Estate" {% if body_type == 'Estate' %}selected{% endif %}>Estate</option>
-        <option value="Coupe" {% if body_type == 'Coupe' %}selected{% endif %}>Coupe</option>
-        <option value="Convertible" {% if body_type == 'Convertible' %}selected{% endif %}>Convertible</option>
-    </select>
+                    <div class="col-md-4">
+                        <label class="form-label">Year:</label>
+                        <input type="number" name="year" value="{{ year }}" class="form-control">
+                    </div>
 
-    <button type="submit">Search</button>
-    <a href="cars.php">Clear Search</a>
+                    <div class="col-md-4">
+                        <label class="form-label">Fuel Type:</label>
+                        <select name="fuel_type" class="form-select">
+                            <option value="">Any</option>
+                            <option value="Petrol" {% if fuel_type == 'Petrol' %}selected{% endif %}>Petrol</option>
+                            <option value="Diesel" {% if fuel_type == 'Diesel' %}selected{% endif %}>Diesel</option>
+                            <option value="Hybrid" {% if fuel_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+                            <option value="Electric" {% if fuel_type == 'Electric' %}selected{% endif %}>Electric</option>
+                        </select>
+                    </div>
 
-</form>
+                    <div class="col-md-4">
+                        <label class="form-label">Transmission:</label>
+                        <select name="transmission" class="form-select">
+                            <option value="">Any</option>
+                            <option value="Manual" {% if transmission == 'Manual' %}selected{% endif %}>Manual</option>
+                            <option value="Automatic" {% if transmission == 'Automatic' %}selected{% endif %}>Automatic</option>
+                        </select>
+                    </div>
 
-<h3>Quick Search</h3>
+                    <div class="col-md-4">
+                        <label class="form-label">Body Type:</label>
+                        <select name="body_type" class="form-select">
+                            <option value="">Any</option>
+                            <option value="Hatchback" {% if body_type == 'Hatchback' %}selected{% endif %}>Hatchback</option>
+                            <option value="Saloon" {% if body_type == 'Saloon' %}selected{% endif %}>Saloon</option>
+                            <option value="SUV" {% if body_type == 'SUV' %}selected{% endif %}>SUV</option>
+                            <option value="Estate" {% if body_type == 'Estate' %}selected{% endif %}>Estate</option>
+                            <option value="Coupe" {% if body_type == 'Coupe' %}selected{% endif %}>Coupe</option>
+                            <option value="Convertible" {% if body_type == 'Convertible' %}selected{% endif %}>Convertible</option>
+                        </select>
+                    </div>
 
-<input type="text" id="ajaxSearch" placeholder="Search by make or model">
+                </div>
 
-<div id="ajaxResults"></div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <a href="cars.php" class="btn btn-secondary">Clear Search</a>
+                </div>
 
-<table border="1">
+            </form>
 
-    <tr>
-        <th>Make</th>
-        <th>Model</th>
-        <th>Year</th>
-        <th>Price</th>
-        <th>Mileage</th>
-        <th>Details</th>
-    </tr>
+        </div>
+    </div>
+
+
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <h3 class="card-title mb-3">Quick Search</h3>
+
+            <input
+                type="text"
+                id="ajaxSearch"
+                class="form-control"
+                placeholder="Search by make or model"
+            >
+
+            <div id="ajaxResults" class="mt-3"></div>
+
+        </div>
+    </div>
+
+
+    <div class="row g-4">
 
     {% for car in cars %}
 
-        <tr>
-            <td>{{ car.make }}</td>
-            <td>{{ car.model }}</td>
-            <td>{{ car.year }}</td>
-            <td>£{{ car.price }}</td>
-            <td>{{ car.mileage }} miles</td>
-            <td>
-                <a href="car-details.php?id={{ car.car_id }}">
-                    View Details
-                </a>
-            </td>
-        </tr>
+        <div class="col-md-6 col-lg-4">
+
+            <div class="car-card h-100">
+
+                <div class="car-card-top">
+
+                    <span class="car-badge">
+                        {{ car.year }}
+                    </span>
+
+                    <span class="car-price">
+                        £{{ car.price }}
+                    </span>
+
+                </div>
+
+                <div class="car-card-body">
+
+                    <h3>
+                        {{ car.make }} {{ car.model }}
+                    </h3>
+
+                    <div class="car-specs">
+
+                        <span>
+                            ⚙ {{ car.transmission }}
+                        </span>
+
+                        <span>
+                            ⛽ {{ car.fuel_type }}
+                        </span>
+
+                        <span>
+                            🛣 {{ car.mileage }} miles
+                        </span>
+
+                    </div>
+
+                    <div class="car-location">
+                        📍 {{ car.location }}
+                    </div>
+
+                    <a
+                        href="car-details.php?id={{ car.car_id }}"
+                        class="btn btn-primary w-100"
+                    >
+                        View Details
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% else %}
+
+        <div class="col-12">
+
+            <div class="alert alert-info">
+                No cars found matching your search.
+            </div>
+
+        </div>
 
     {% endfor %}
 
-</table>
+</div>
 
 <script src="js/autohub.js"></script>
 
