@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,12 +8,14 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- AutoHub Styles -->
+    <link rel="stylesheet" href="css/style.css?v=3">
 
     <title>
         {% block title %}AutoHub{% endblock %}
@@ -22,49 +25,79 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
 
-        <div class="container">
+    <!-- Navigation -->
+    <nav class="autohub-navbar">
+        <div class="autohub-nav-container">
 
-            <a class="navbar-brand" href="index.php">
-                AutoHub
+            <!-- Brand -->
+            <a class="navbar-brand autohub-brand" href="index.php">
+                Auto<span>Hub</span>
             </a>
 
-            <div class="navbar-nav">
+            <!-- Mobile Menu Button -->
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#autohubNavbar"
+                aria-controls="autohubNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <a class="nav-link" href="index.php">
-                    Home
-                </a>
+            <!-- Navigation Links -->
+           <div id="autohubNavbar">
 
-                <a class="nav-link" href="cars.php">
-                    Browse Cars
-                </a>
+                <div class="autohub-nav-links">
 
-                <a class="nav-link" href="add-car.php">
-                    Sell a Car
-                </a>
+                    <a class="nav-link" href="index.php">
+                        Home
+                    </a>
 
-                {% if username %}
+                    <a class="nav-link" href="cars.php">
+                        Browse Cars
+                    </a>
 
-                <span class="nav-link text-light">
-                    Welcome, {{ username }}
-                </span>
+                    {% if username %}
 
-                <a class="nav-link" href="logout.php">
-                    Logout
-                </a>
+                        <a class="nav-link" href="add-car.php">
+                            Sell Your Car
+                        </a>
 
-            {% else %}
+                        <span class="nav-link autohub-welcome">
+                            Welcome, {{ username }}
+                        </span>
 
-                <a class="nav-link" href="login.php">
-                    Login
-                </a>
+                        <a
+                            class="nav-link autohub-login-link"
+                            href="logout.php"
+                        >
+                            Logout
+                        </a>
 
-                <a class="nav-link" href="register.php">
-                    Register
-                </a>
+                    {% else %}
 
-            {% endif %}
+                        <a class="nav-link" href="login.php">
+                            Sell Your Car
+                        </a>
+
+                        <a class="nav-link" href="login.php">
+                            Login
+                        </a>
+
+                        <a
+                            class="btn btn-primary autohub-register-btn"
+                            href="register.php"
+                        >
+                            Register
+                        </a>
+
+                    {% endif %}
+
+                </div>
 
             </div>
 
@@ -72,11 +105,19 @@
 
     </nav>
 
+
+    <!-- Main Page Content -->
     <main>
 
         {% block content %}{% endblock %}
 
     </main>
+
+
+    <!-- Bootstrap JavaScript -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    ></script>
 
 </body>
 
