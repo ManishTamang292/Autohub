@@ -4,15 +4,24 @@
 
 {% block content %}
 
+
+<!-- Hero Section -->
 <section class="hero-section">
+
+    <div class="hero-overlay"></div>
 
     <div class="container">
 
         <div class="hero-content">
 
-            <span class="hero-label">AUTOHUB MARKETPLACE</span>
+            <span class="hero-label">
+                AUTOHUB • CAR MARKETPLACE
+            </span>
 
-            <h1>Find Your Next Car</h1>
+            <h1>
+                Find Your<br>
+                <span>Next Car.</span>
+            </h1>
 
             <p>
                 Discover quality cars, compare your options,
@@ -25,9 +34,29 @@
                     Browse Cars
                 </a>
 
-                <a href="add-car.php" class="btn btn-outline-light btn-lg">
-                    Sell Your Car
-                </a>
+                {% if username %}
+
+                    <a href="add-car.php"
+                       class="btn btn-outline-light btn-lg">
+                        Sell Your Car
+                    </a>
+
+                {% else %}
+
+                    <a href="login.php"
+                       class="btn btn-outline-light btn-lg">
+                        Sign In to Sell
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+            <div class="hero-features">
+
+                <span>✓ Wide selection</span>
+                <span>✓ Easy search</span>
+                <span>✓ Detailed listings</span>
 
             </div>
 
@@ -38,77 +67,117 @@
 </section>
 
 
-<section class="container py-5">
+<!-- Why AutoHub -->
+<section class="why-section">
 
-    <div class="text-center mb-5">
+    <div class="container">
 
-        <span class="section-label">WHY AUTOHUB?</span>
+        <div class="section-heading text-center">
 
-        <h2>Everything You Need</h2>
+            <span class="section-label">
+                WHY AUTOHUB?
+            </span>
 
-        <p class="text-muted">
-            A simple way to find, manage and sell vehicles.
-        </p>
+            <h2>
+                Everything You Need
+                <span>In One Place.</span>
+            </h2>
 
-    </div>
-
-
-    <div class="row g-4">
-
-        <div class="col-md-4">
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🔎
-                </div>
-
-                <h3>Easy Search</h3>
-
-                <p>
-                    Search cars using multiple criteria including
-                    price, year, fuel type and transmission.
-                </p>
-
-            </div>
+            <p>
+                A simple and convenient way to find,
+                compare and sell vehicles.
+            </p>
 
         </div>
 
 
-        <div class="col-md-4">
+        <div class="row g-4">
 
-            <div class="feature-card">
+            <div class="col-md-4">
 
-                <div class="feature-icon">
-                    🚗
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🔎
+                    </div>
+
+                    <h3>
+                        Easy Search
+                    </h3>
+
+                    <p>
+                        Find vehicles using multiple criteria
+                        including price, year, fuel type and
+                        transmission.
+                    </p>
+
+                    <a href="cars.php">
+                        Start Searching →
+                    </a>
+
                 </div>
-
-                <h3>Browse Cars</h3>
-
-                <p>
-                    Explore available vehicles and view detailed
-                    information about each listing.
-                </p>
 
             </div>
 
-        </div>
 
+            <div class="col-md-4">
 
-        <div class="col-md-4">
+                <div class="feature-card">
 
-            <div class="feature-card">
+                    <div class="feature-icon">
+                        🚗
+                    </div>
 
-                <div class="feature-icon">
-                    🏷️
+                    <h3>
+                        Browse Cars
+                    </h3>
+
+                    <p>
+                        Explore available vehicles and view
+                        detailed information about every listing.
+                    </p>
+
+                    <a href="cars.php">
+                        Browse Listings →
+                    </a>
+
                 </div>
 
-                <h3>Sell Your Car</h3>
+            </div>
 
-                <p>
-                    Create your own vehicle listing and manage
-                    your car information easily.
-                </p>
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🏷️
+                    </div>
+
+                    <h3>
+                        Sell Your Car
+                    </h3>
+
+                    <p>
+                        Create your own vehicle listing and
+                        manage your car information easily.
+                    </p>
+
+                    {% if username %}
+
+                        <a href="add-car.php">
+                            Sell Your Car →
+
+                    {% else %}
+
+                        <a href="login.php">
+                            Sign In to Sell →
+
+                    {% endif %}
+
+                        </a>
+
+                </div>
 
             </div>
 
@@ -119,19 +188,28 @@
 </section>
 
 
+<!-- Call To Action -->
 <section class="cta-section">
 
     <div class="container">
 
         <div class="cta-content">
 
-            <h2>Ready to find your next car?</h2>
+            <span class="section-label">
+                START YOUR SEARCH
+            </span>
+
+            <h2>
+                Ready to find your next car?
+            </h2>
 
             <p>
-                Browse our available vehicles and start your search today.
+                Explore our vehicle listings and find
+                a car that matches your needs.
             </p>
 
-            <a href="cars.php" class="btn btn-light btn-lg">
+            <a href="cars.php"
+               class="btn btn-primary btn-lg">
                 Explore Cars
             </a>
 
