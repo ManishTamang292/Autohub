@@ -16,6 +16,15 @@ $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    if (
+        !isset($_POST['csrf_token']) ||
+        !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+    ) {
+        http_response_code(403);
+        echo "Invalid CSRF token.";
+        exit();
+    }
+
     $make = trim($_POST['make'] ?? '');
     $model = trim($_POST['model'] ?? '');
     $year = filter_input(INPUT_POST, 'year', FILTER_VALIDATE_INT);
@@ -124,7 +133,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 echo $twig->render('add-car.html.twig', [
-    'errors' => $errors
+    'errors' => $errors,
+    'csrf_token' => $_SESSION['csrf_token']
 ]);
 
 exit();
