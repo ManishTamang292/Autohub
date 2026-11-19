@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $colour = trim($_POST['colour'] ?? '');
     $location = trim($_POST['location'] ?? '');
     $description = trim($_POST['description'] ?? '');
+    $image = $_FILES['image'] ?? null;
 
     $allowed_fuel_types = [
         'Petrol',
@@ -102,16 +103,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = 'Description is required.';
     }
 
+    if (!$image || $image['error'] !== UPLOAD_ERR_OK) {
+        $errors[] = 'Please upload a car image.';
+    } else {
+    
+        $max_file_size = 5 * 1024 * 1024; // 5 MB
+    
+        if ($image['size'] > $max_file_size) {
+            $errors[] = 'Image must be smaller than 5 MB.';
+        }
+    
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mime_type = $finfo->file($image['tmp_name']);
+    
+        $allowed_image_types = [
+            'image/jpeg' => 'jpg',
+            'image/png'  => 'png',
+            'image/webp' => 'webp'
+        ];
+    
+        if (!isset($allowed_image_types[$mime_type])) {
+            $errors[] = 'Only JPG, PNG and WebP images are allowed.';
+        }
+    }
+
     if (empty($errors)) {
 
+        $upload_directory = __DIR__ . '/images/cars/';
+    
+        $file_extension = $allowed_image_types[$mime_type];
+    
+        $image_filename = 'car_' . bin2hex(random_bytes(16)) . '.' . $file_extension;
+    
+        $image_path = $upload_directory . $image_filename;
+    
+        if (!move_uploaded_file($image['tmp_name'], $image_path)) {
+            $errors[] = 'Failed to save the uploaded image.';
+        }
+    }
+    
+    if (empty($errors)) {
+    
         $stmt = $mysqli->prepare(
             "INSERT INTO cars
-            (make, model, year, price, mileage, fuel_type, transmission, body_type, colour, location, description)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            (make, model, year, price, mileage, fuel_type, transmission, body_type, colour, location, description, image)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
-
+    
         $stmt->bind_param(
-            "ssidissssss",
+            "ssidisssssss",
             $make,
             $model,
             $year,
@@ -122,11 +162,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $body_type,
             $colour,
             $location,
-            $description
+            $description,
+            $image_filename
         );
-
+    
         $stmt->execute();
-
+    
         header("Location: cars.php");
         exit();
     }

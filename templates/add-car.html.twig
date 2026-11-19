@@ -22,7 +22,7 @@
                 </div>
             {% endif %}
 
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
 
                 <input
                     type="hidden"
@@ -145,7 +145,7 @@
                         >
                     </div>
 
-                    <div class="col-12">
+                   <div class="col-12">
                         <label class="form-label">Description:</label>
                         <textarea
                             name="description"
@@ -153,6 +153,20 @@
                             rows="5"
                             required
                         ></textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Car Image:</label>
+                        <input
+                            type="file"
+                            name="image"
+                            class="form-control"
+                            accept="image/jpeg,image/png,image/webp"
+                            required
+                        >
+                        <div class="form-text">
+                            Upload a JPG, PNG or WebP image. Maximum size will be validated by the server.
+                        </div>
                     </div>
 
                 </div>

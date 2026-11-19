@@ -61,6 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $location = trim($_POST['location'] ?? '');
     $description = trim($_POST['description'] ?? '');
 
+    $image = $_FILES['image'] ?? null;
+    $new_image_filename = $car['image'];
+
     $allowed_fuel_types = [
         'Petrol',
         'Diesel',
@@ -126,6 +129,59 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = 'Description is required.';
     }
 
+    /*
+     * Handle optional image replacement.
+     * If no new image is selected, the existing image is kept.
+     */
+    if (
+        $image &&
+        $image['error'] !== UPLOAD_ERR_NO_FILE
+    ) {
+
+        if ($image['error'] !== UPLOAD_ERR_OK) {
+            $errors[] = 'There was a problem uploading the new image.';
+        } else {
+
+            $max_file_size = 5 * 1024 * 1024;
+
+            if ($image['size'] > $max_file_size) {
+                $errors[] = 'Image must be smaller than 5 MB.';
+            }
+
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($image['tmp_name']);
+
+            $allowed_image_types = [
+                'image/jpeg' => 'jpg',
+                'image/png'  => 'png',
+                'image/webp' => 'webp'
+            ];
+
+            if (!isset($allowed_image_types[$mime_type])) {
+                $errors[] = 'Only JPG, PNG and WebP images are allowed.';
+            }
+        }
+    }
+
+    /*
+     * Save the new image if one was uploaded.
+     */
+    if (empty($errors) && $image && $image['error'] === UPLOAD_ERR_OK) {
+
+        $upload_directory = __DIR__ . '/images/cars/';
+
+        $file_extension = $allowed_image_types[$mime_type];
+
+        $new_image_filename =
+            'car_' . bin2hex(random_bytes(16)) . '.' . $file_extension;
+
+        $image_path = $upload_directory . $new_image_filename;
+
+        if (!move_uploaded_file($image['tmp_name'], $image_path)) {
+            $errors[] = 'Failed to save the uploaded image.';
+        }
+    }
+
     if (empty($errors)) {
 
         $stmt = $mysqli->prepare(
@@ -140,12 +196,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 body_type = ?,
                 colour = ?,
                 location = ?,
-                description = ?
+                description = ?,
+                image = ?
             WHERE car_id = ?"
         );
 
         $stmt->bind_param(
-            "ssidissssssi",
+            "ssidisssssssi",
             $make,
             $model,
             $year,
@@ -157,10 +214,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $colour,
             $location,
             $description,
+            $new_image_filename,
             $car_id
         );
 
         $stmt->execute();
+
+        /*
+         * Delete the old image only after the database update succeeds.
+         */
+        if (
+            $image &&
+            $image['error'] === UPLOAD_ERR_OK &&
+            !empty($car['image']) &&
+            $car['image'] !== $new_image_filename
+        ) {
+            $old_image_path = __DIR__ . '/images/cars/' . $car['image'];
+
+            if (is_file($old_image_path)) {
+                unlink($old_image_path);
+            }
+        }
 
         header("Location: car-details.php?id=" . $car_id);
         exit();
@@ -177,7 +251,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         'body_type' => $body_type,
         'colour' => $colour,
         'location' => $location,
-        'description' => $description
+        'description' => $description,
+        'image' => $new_image_filename
     ]);
 }
 
