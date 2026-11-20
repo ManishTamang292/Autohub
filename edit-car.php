@@ -172,8 +172,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $file_extension = $allowed_image_types[$mime_type];
 
-        $new_image_filename =
-            'car_' . bin2hex(random_bytes(16)) . '.' . $file_extension;
+        $next_number = 1;
+
+        while (
+            file_exists($upload_directory . 'cars' . $next_number . '.jpg') ||
+            file_exists($upload_directory . 'cars' . $next_number . '.png') ||
+            file_exists($upload_directory . 'cars' . $next_number . '.webp')
+        ) {
+            $next_number++;
+        }
+
+        $new_image_filename = 'cars' . $next_number . '.' . $file_extension;
 
         $image_path = $upload_directory . $new_image_filename;
 

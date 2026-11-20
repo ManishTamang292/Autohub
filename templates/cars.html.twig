@@ -6,103 +6,305 @@
 
 <div class="container py-4">
 
-    <h2 class="mb-4">Available Cars</h2>
+    <div class="autohub-cars-header">
 
-    <div class="card mb-4">
-        <div class="card-body">
+        <div>
+            <span class="section-label">AUTOHUB MARKETPLACE</span>
 
-            <h3 class="card-title mb-3">Search Cars</h3>
+            <h2>
+                Find Your <span>Next Car.</span>
+            </h2>
 
-            <form method="GET">
-
-                <div class="row g-3">
-
-                    <div class="col-md-4">
-                        <label class="form-label">Make:</label>
-                        <input type="text" name="make" value="{{ make }}" class="form-control">
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Model:</label>
-                        <input type="text" name="model" value="{{ model }}" class="form-control">
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Minimum Price:</label>
-                        <input type="number" name="min_price" value="{{ min_price }}" class="form-control">
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Maximum Price:</label>
-                        <input type="number" name="max_price" value="{{ max_price }}" class="form-control">
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Year:</label>
-                        <input type="number" name="year" value="{{ year }}" class="form-control">
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Fuel Type:</label>
-                        <select name="fuel_type" class="form-select">
-                            <option value="">Any</option>
-                            <option value="Petrol" {% if fuel_type == 'Petrol' %}selected{% endif %}>Petrol</option>
-                            <option value="Diesel" {% if fuel_type == 'Diesel' %}selected{% endif %}>Diesel</option>
-                            <option value="Hybrid" {% if fuel_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
-                            <option value="Electric" {% if fuel_type == 'Electric' %}selected{% endif %}>Electric</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Transmission:</label>
-                        <select name="transmission" class="form-select">
-                            <option value="">Any</option>
-                            <option value="Manual" {% if transmission == 'Manual' %}selected{% endif %}>Manual</option>
-                            <option value="Automatic" {% if transmission == 'Automatic' %}selected{% endif %}>Automatic</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="form-label">Body Type:</label>
-                        <select name="body_type" class="form-select">
-                            <option value="">Any</option>
-                            <option value="Hatchback" {% if body_type == 'Hatchback' %}selected{% endif %}>Hatchback</option>
-                            <option value="Saloon" {% if body_type == 'Saloon' %}selected{% endif %}>Saloon</option>
-                            <option value="SUV" {% if body_type == 'SUV' %}selected{% endif %}>SUV</option>
-                            <option value="Estate" {% if body_type == 'Estate' %}selected{% endif %}>Estate</option>
-                            <option value="Coupe" {% if body_type == 'Coupe' %}selected{% endif %}>Coupe</option>
-                            <option value="Convertible" {% if body_type == 'Convertible' %}selected{% endif %}>Convertible</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class="mt-3">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                    <a href="cars.php" class="btn btn-secondary">Clear Search</a>
-                </div>
-
-            </form>
-
+            <p>
+                Search, compare and discover vehicles that match your needs.
+            </p>
         </div>
+
     </div>
 
 
-    <div class="card mb-4">
-        <div class="card-body">
+    <div class="autohub-search-panel mb-4">
 
-            <h3 class="card-title mb-3">Quick Search</h3>
+        <div class="search-panel-header">
+
+            <div>
+                <span class="search-panel-label">SEARCH VEHICLES</span>
+
+                <h3>Find the right car for you</h3>
+
+                <p>
+                    Use multiple filters to narrow down your search.
+                </p>
+            </div>
+
+            <div class="search-panel-icon">
+                🚘
+            </div>
+
+        </div>
+
+
+        <form method="GET">
+
+            <div class="row g-3">
+
+                <div class="col-md-6 col-lg-4">
+
+                    <label class="autohub-search-label">
+                        Make
+                    </label>
+
+                    <input
+                        type="text"
+                        name="make"
+                        value="{{ make }}"
+                        class="form-control autohub-search-input"
+                        placeholder="e.g. BMW, Audi, Toyota"
+                    >
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <label class="autohub-search-label">
+                        Model
+                    </label>
+
+                    <input
+                        type="text"
+                        name="model"
+                        value="{{ model }}"
+                        class="form-control autohub-search-input"
+                        placeholder="e.g. 3 Series, A4, Corolla"
+                    >
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <label class="autohub-search-label">
+                        Year
+                    </label>
+
+                    <input
+                        type="number"
+                        name="year"
+                        value="{{ year }}"
+                        class="form-control autohub-search-input"
+                        placeholder="e.g. 2022"
+                    >
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <label class="autohub-search-label">
+                        Minimum Price
+                    </label>
+
+                    <div class="autohub-input-group">
+
+                        <span>£</span>
+
+                        <input
+                            type="number"
+                            name="min_price"
+                            value="{{ min_price }}"
+                            class="form-control autohub-search-input"
+                            placeholder="0"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <label class="autohub-search-label">
+                        Maximum Price
+                    </label>
+
+                    <div class="autohub-input-group">
+
+                        <span>£</span>
+
+                        <input
+                            type="number"
+                            name="max_price"
+                            value="{{ max_price }}"
+                            class="form-control autohub-search-input"
+                            placeholder="No maximum"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <label class="autohub-search-label">
+                        Fuel Type
+                    </label>
+
+                    <select
+                        name="fuel_type"
+                        class="form-select autohub-search-input"
+                    >
+
+                        <option value="">Any fuel type</option>
+
+                        <option value="Petrol" {% if fuel_type == 'Petrol' %}selected{% endif %}>
+                            Petrol
+                        </option>
+
+                        <option value="Diesel" {% if fuel_type == 'Diesel' %}selected{% endif %}>
+                            Diesel
+                        </option>
+
+                        <option value="Hybrid" {% if fuel_type == 'Hybrid' %}selected{% endif %}>
+                            Hybrid
+                        </option>
+
+                        <option value="Electric" {% if fuel_type == 'Electric' %}selected{% endif %}>
+                            Electric
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <label class="autohub-search-label">
+                        Transmission
+                    </label>
+
+                    <select
+                        name="transmission"
+                        class="form-select autohub-search-input"
+                    >
+
+                        <option value="">Any transmission</option>
+
+                        <option value="Manual" {% if transmission == 'Manual' %}selected{% endif %}>
+                            Manual
+                        </option>
+
+                        <option value="Automatic" {% if transmission == 'Automatic' %}selected{% endif %}>
+                            Automatic
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <label class="autohub-search-label">
+                        Body Type
+                    </label>
+
+                    <select
+                        name="body_type"
+                        class="form-select autohub-search-input"
+                    >
+
+                        <option value="">Any body type</option>
+
+                        <option value="Hatchback" {% if body_type == 'Hatchback' %}selected{% endif %}>
+                            Hatchback
+                        </option>
+
+                        <option value="Saloon" {% if body_type == 'Saloon' %}selected{% endif %}>
+                            Saloon
+                        </option>
+
+                        <option value="SUV" {% if body_type == 'SUV' %}selected{% endif %}>
+                            SUV
+                        </option>
+
+                        <option value="Estate" {% if body_type == 'Estate' %}selected{% endif %}>
+                            Estate
+                        </option>
+
+                        <option value="Coupe" {% if body_type == 'Coupe' %}selected{% endif %}>
+                            Coupe
+                        </option>
+
+                        <option value="Convertible" {% if body_type == 'Convertible' %}selected{% endif %}>
+                            Convertible
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="autohub-search-actions">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary autohub-search-button"
+                >
+                    Search Cars
+                </button>
+
+                <a
+                    href="cars.php"
+                    class="btn autohub-clear-button"
+                >
+                    Clear Filters
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div class="autohub-quick-search mb-4">
+
+        <div class="quick-search-header">
+
+            <div>
+                <span class="search-panel-label">QUICK SEARCH</span>
+
+                <h3>Search instantly</h3>
+            </div>
+
+            <span class="quick-search-badge">
+                LIVE
+            </span>
+
+        </div>
+
+        <div class="quick-search-input-wrapper">
+
+            <span class="quick-search-icon">
+                🔎
+            </span>
 
             <input
                 type="text"
                 id="ajaxSearch"
                 class="form-control"
-                placeholder="Search by make or model"
+                placeholder="Search by make or model..."
             >
 
-            <div id="ajaxResults" class="mt-3"></div>
-
         </div>
+
+        <div id="ajaxResults" class="mt-3"></div>
+
     </div>
 
 
@@ -114,57 +316,88 @@
 
             <div class="car-card h-100">
 
-                {% if car.image %}
-                    <img
-                        src="images/cars/{{ car.image }}"
-                        alt="{{ car.make }} {{ car.model }}"
-                        class="car-card-image"
-                    >
-                {% endif %}
+                <div class="car-card-image-wrapper">
 
-                <div class="car-card-top">
+                    {% if car.image %}
 
-                    <span class="car-badge">
-                        {{ car.year }}
-                    </span>
+                        <img
+                            src="images/cars/{{ car.image }}"
+                            alt="{{ car.make }} {{ car.model }}"
+                            class="car-card-image"
+                        >
 
-                    <span class="car-price">
-                        £{{ car.price }}
-                    </span>
+                    {% else %}
 
-                </div>
+                        <div class="car-card-image-placeholder">
+                            No Image Available
+                        </div>
 
-                <div class="car-card-body">
+                    {% endif %}
 
-                    <h3>
-                        {{ car.make }} {{ car.model }}
-                    </h3>
+                        </div>
 
-                    <div class="car-specs">
 
-                        <span>
-                            ⚙ {{ car.transmission }}
-                        </span>
+                        <div class="car-card-body">
 
-                        <span>
-                            ⛽ {{ car.fuel_type }}
-                        </span>
+                            <div class="car-card-heading">
 
-                        <span>
-                            🛣 {{ car.mileage }} miles
-                        </span>
+                                <div>
+
+                                    <span class="car-card-label">
+                                        {{ car.year }} • {{ car.body_type }}
+                                    </span>
+
+                            <h3>
+                                {{ car.make }} {{ car.model }}
+                            </h3>
+
+                        </div>
+
+                        <div class="car-price">
+                            £{{ car.price|number_format(0, '.', ',') }}
+                        </div>
 
                     </div>
 
-                    <div class="car-location">
-                        📍 {{ car.location }}
+
+                    <div class="car-spec-grid">
+
+                        <div class="car-spec-item">
+                            <div>
+                                <small>Transmission</small>
+                                <strong>{{ car.transmission }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="car-spec-item">
+                            <div>
+                                <small>Fuel</small>
+                                <strong>{{ car.fuel_type }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="car-spec-item">
+                            <div>
+                                <small>Mileage</small>
+                                <strong>{{ car.mileage }} miles</strong>
+                            </div>
+                        </div>
+
+                        <div class="car-spec-item">
+                            <div>
+                                <small>Location</small>
+                                <strong>{{ car.location }}</strong>
+                            </div>
+                        </div>
+
                     </div>
 
                     <a
                         href="car-details.php?id={{ car.car_id }}"
-                        class="btn btn-primary w-100"
+                        class="car-view-button"
                     >
                         View Details
+                        <span>→</span>
                     </a>
 
                 </div>
@@ -184,6 +417,8 @@
         </div>
 
     {% endfor %}
+
+    </div>
 
 </div>
 
