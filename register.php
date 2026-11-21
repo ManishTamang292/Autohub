@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once 'vendor/autoload.php';
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
@@ -16,10 +18,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
+    $captcha = trim($_POST['captcha'] ?? '');
 
     if ($username === '') {
         $errors[] = 'Username is required.';
     }
+
+    if (
+        !isset($_SESSION['captcha_text']) ||
+        !hash_equals($_SESSION['captcha_text'], strtoupper($captcha))
+    ) {
+        $errors[] = 'Incorrect CAPTCHA. Please try again.';
+    }
+    
+    unset($_SESSION['captcha_text']);
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'Please enter a valid email address.';
