@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once 'auth.php';
 
 require_once 'vendor/autoload.php';
 
@@ -8,6 +8,11 @@ $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment($loader, [
     'autoescape' => 'html'
 ]);
+
+$twig->addGlobal(
+    'csrf_token',
+    $_SESSION['csrf_token']
+);
 
 include("db.php");
 
@@ -24,6 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($password === '') {
         $errors[] = 'Password is required.';
+    }
+
+    $submitted_csrf_token = $_POST['csrf_token'] ?? '';
+
+    if (
+        !is_string($submitted_csrf_token) ||
+        !isset($_SESSION['csrf_token']) ||
+        !hash_equals($_SESSION['csrf_token'], $submitted_csrf_token)
+    ) {
+        $errors[] = 'Invalid security token. Please refresh the page and try again.';
     }
 
     if (empty($errors)) {

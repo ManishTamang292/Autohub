@@ -1,5 +1,7 @@
 <?php
 
+require_once 'auth.php';
+
 require_once 'vendor/autoload.php';
 
 $loader = new \Twig\Loader\FilesystemLoader('templates');
