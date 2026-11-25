@@ -15,68 +15,81 @@ $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $username = trim($_POST['username'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $captcha = trim($_POST['captcha'] ?? '');
-
-    if ($username === '') {
-        $errors[] = 'Username is required.';
-    }
+    $submitted_csrf_token = $_POST['csrf_token'] ?? '';
 
     if (
-        !isset($_SESSION['captcha_text']) ||
-        !hash_equals($_SESSION['captcha_text'], strtoupper($captcha))
+        !is_string($submitted_csrf_token) ||
+        !isset($_SESSION['csrf_token']) ||
+        !hash_equals($_SESSION['csrf_token'], $submitted_csrf_token)
     ) {
-        $errors[] = 'Incorrect CAPTCHA. Please try again.';
-    }
-    
-    unset($_SESSION['captcha_text']);
+        $errors[] = 'Invalid security token. Please refresh the page and try again.';
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = 'Please enter a valid email address.';
-    }
+    } else {
 
-    if (strlen($password) < 8) {
-        $errors[] = 'Password must be at least 8 characters.';
-    }
+        $username = trim($_POST['username'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $captcha = trim($_POST['captcha'] ?? '');
 
-    if (empty($errors)) {
+        if ($username === '') {
+            $errors[] = 'Username is required.';
+        }
 
-        $password_hash = password_hash(
-            $password,
-            PASSWORD_DEFAULT
-        );
+        if (
+            !isset($_SESSION['captcha_text']) ||
+            !hash_equals($_SESSION['captcha_text'], strtoupper($captcha))
+        ) {
+            $errors[] = 'Incorrect CAPTCHA. Please try again.';
+        }
 
-        $stmt = $mysqli->prepare(
-            "INSERT INTO users (username, email, password)
-             VALUES (?, ?, ?)"
-        );
+        unset($_SESSION['captcha_text']);
 
-        $stmt->bind_param(
-            "sss",
-            $username,
-            $email,
-            $password_hash
-        );
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Please enter a valid email address.';
+        }
 
-        try {
+        if (strlen($password) < 8) {
+            $errors[] = 'Password must be at least 8 characters.';
+        }
 
-            if ($stmt->execute()) {
-        
-                header("Location: login.php");
-                exit();
+        if (empty($errors)) {
+
+            $password_hash = password_hash(
+                $password,
+                PASSWORD_DEFAULT
+            );
+
+            $stmt = $mysqli->prepare(
+                "INSERT INTO users (username, email, password)
+                 VALUES (?, ?, ?)"
+            );
+
+            $stmt->bind_param(
+                "sss",
+                $username,
+                $email,
+                $password_hash
+            );
+
+            try {
+
+                if ($stmt->execute()) {
+
+                    header("Location: login.php");
+                    exit();
+                }
+
+            } catch (mysqli_sql_exception $e) {
+
+                $errors[] = 'Username or email may already be registered.';
             }
-        
-        } catch (mysqli_sql_exception $e) {
-        
-            $errors[] = 'Username or email may already be registered.';
         }
     }
 }
 
 echo $twig->render('register.html.twig', [
-    'errors' => $errors
+    'errors' => $errors,
+    'csrf_token' => $_SESSION['csrf_token']
 ]);
 
 exit();
